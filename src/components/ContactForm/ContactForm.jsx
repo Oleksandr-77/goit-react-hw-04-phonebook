@@ -1,22 +1,20 @@
 import PropTypes from 'prop-types';
-import { Component } from 'react';
+import { useState } from 'react';
 import css from './contactForm.module.css';
 
-const INITIAL_STATE = {
-  name: '',
-  number: '',
-};
+  const ContactForm = ({ onAddContact }) => {
+    const [name, setName] = useState('');
+    const [number, setNumber] = useState('');
 
-class ContactForm extends Component {
-  state = INITIAL_STATE;
+    const handleSubmit = event => {
+      event.preventDefault();
+      onAddContact({ name, number });
+      setName('');
+      setNumber('');
+    };
 
-  updateField = event => {
-    this.setState({ [event.target.name]: event.target.value });
-  };
-
-  render() {
     return (
-      <form className={css.form}>
+      <form onSubmit={handleSubmit} className={css.form}>
         <label className={css.label} htmlFor="name">
           Name
         </label>
@@ -27,8 +25,8 @@ class ContactForm extends Component {
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           required
-          value={this.state.name}
-          onChange={this.updateField}
+          value={name}
+          onChange={event => setName(event.target.value)}
         />
         <label className={css.label} htmlFor="number">
           Number
@@ -40,28 +38,19 @@ class ContactForm extends Component {
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
-          value={this.state.number}
-          onChange={this.updateField}
+          value={number}
+          onChange={event => setNumber(event.target.value)}
         />
-        <button
-          className={css.btn}
-          type="submit"
-          onClick={() => {
-            this.props.onAddContact(this.state);
-            this.setState({
-              name: '',
-              number: '',
-            });
-          }}
-        >
-          Add Contact
-        </button>
-      </form>
-    );
-  }
-}
+
+  <button className={css.btn} type="submit">
+        Add Contact
+      </button>
+    </form>
+  );
+};
 
 ContactForm.propTypes = {
   onAddContact: PropTypes.func.isRequired,
 };
+
 export default ContactForm;

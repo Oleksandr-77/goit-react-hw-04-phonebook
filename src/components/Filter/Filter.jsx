@@ -1,13 +1,11 @@
 import PropTypes from 'prop-types';
-import { Component } from 'react';
 import css from './filter.module.css';
 
-class Filter extends Component {
-  updateFilter = event => {
-    this.props.onFilter(event.target.value);
+const Filter = props => {
+  const updateFilter = event => {
+    props.onFilter(event.target.value);
   };
 
-  render() {
     return (
       <div className={css.filter}>
         <label className={css.label} htmlFor="filter">
@@ -17,13 +15,12 @@ class Filter extends Component {
           className={css.filterInput}
           type="text"
           name="filter"
-          onChange={this.updateFilter}
-          value={this.props.filter}
+          onChange={updateFilter}
+          value={props.filter}
         />
       </div>
     );
-  }
-}
+  };
 
 Filter.propTypes = {
   filter: PropTypes.string.isRequired,

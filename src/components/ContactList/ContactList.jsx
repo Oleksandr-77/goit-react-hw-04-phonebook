@@ -1,11 +1,7 @@
 import PropTypes from 'prop-types';
-import { Component } from 'react';
 import css from './contactList.module.css';
 
-class ContactList extends Component {
-  render() {
-    const { contacts, onDeleteContact } = this.props;
-
+const ContactList = ({ contacts, onDeleteContact }) => {
     return (
       <ul className={css.contactList}>
         {contacts.map(contact => (
@@ -23,8 +19,7 @@ class ContactList extends Component {
         ))}
       </ul>
     );
-  }
-}
+  };
 
 ContactList.propTypes = {
   contacts: PropTypes.arrayOf(
@@ -36,4 +31,5 @@ ContactList.propTypes = {
   ).isRequired,
   onDeleteContact: PropTypes.func.isRequired,
 };
+
 export default ContactList;
